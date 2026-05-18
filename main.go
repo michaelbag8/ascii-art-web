@@ -98,12 +98,12 @@ func renderError(w http.ResponseWriter, code int, message string) {
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
 	}
 	templ, err := template.ParseFiles("templates/index.html")
 	if err != nil {
-		renderError(w, http.StatusInternalServerError, "InternalServerError")
+		renderError(w, http.StatusInternalServerError, "Internal Server Error")
 		return
 	}
 	err = templ.Execute(w, nil)
@@ -116,6 +116,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
+	fmt.Println("server is runing.....http://localhost:8080")
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/ascii-art", asciiArtHandler)
 
@@ -123,5 +124,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	
 
 }
