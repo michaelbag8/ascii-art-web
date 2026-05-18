@@ -35,9 +35,17 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := ValidateInput(input, banner)
 	if err != nil{
-		http.Error(w, "Bad request", http.StatusMethodNotAllowed)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	data , err := LoadBanner("banner/" + banner + ".txt")
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	result := Generate(input, data)
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
