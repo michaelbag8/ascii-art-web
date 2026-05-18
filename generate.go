@@ -9,7 +9,7 @@ func Generate(input string, banner map[rune][]string) string {
 
 	for i, segment := range segments {
 		if segment == "" {
-			if i == 0 || segments[i-1] != ""{
+			if i == 0 || segments[i-1] != "" {
 				output.WriteString("\n")
 			}
 			continue
