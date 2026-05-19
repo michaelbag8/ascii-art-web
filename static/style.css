@@ -11,7 +11,7 @@ body {
     align-items: center;
 
     background: linear-gradient(135deg, #1e293b, #0f172a);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: monospace;
     padding: 20px;
     color: white;
 }
