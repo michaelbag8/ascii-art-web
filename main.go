@@ -25,7 +25,6 @@ func ValidateInput(input string, banner string) error {
 	return nil
 }
 
-
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
@@ -98,13 +97,12 @@ func renderError(w http.ResponseWriter, code int, message string) {
 	}
 }
 
-
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path != "/" {
-    renderError(w, http.StatusNotFound, "Page Not Found")
-    return
-}
+		renderError(w, http.StatusNotFound, "Page Not Found")
+		return
+	}
 	if r.Method != "GET" {
 		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
@@ -122,12 +120,13 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-
 func main() {
 
 	fmt.Println("server is runing.....http://localhost:8080")
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/ascii-art", asciiArtHandler)
+
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
