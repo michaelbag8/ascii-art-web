@@ -25,6 +25,7 @@ func ValidateInput(input string, banner string) error {
 	return nil
 }
 
+
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
@@ -35,7 +36,7 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := ValidateInput(input, banner)
 	if err != nil {
-		renderError(w,http.StatusBadRequest, "Bad Request")
+		renderError(w, http.StatusBadRequest, "Bad Request")
 		return
 	}
 
@@ -60,9 +61,10 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 
 	err = templ.Execute(w, content)
 	if err != nil {
-		renderError(w,http.StatusInternalServerError, "Internal Server Error")
+		renderError(w, http.StatusInternalServerError, "Internal Server Error")
 		return
 	}
+
 }
 
 type PageData struct {
@@ -77,7 +79,7 @@ type ErrorData struct {
 }
 
 func renderError(w http.ResponseWriter, code int, message string) {
-	templ, err := template.ParseFiles("templates/error.html")
+	templ, err := template.ParseFiles("templates/errors.html")
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
@@ -96,7 +98,13 @@ func renderError(w http.ResponseWriter, code int, message string) {
 	}
 }
 
+
 func homeHandler(w http.ResponseWriter, r *http.Request) {
+
+	if r.URL.Path != "/" {
+    renderError(w, http.StatusNotFound, "Page Not Found")
+    return
+}
 	if r.Method != "GET" {
 		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
@@ -114,6 +122,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+
 func main() {
 
 	fmt.Println("server is runing.....http://localhost:8080")
@@ -124,6 +133,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
 
 }
