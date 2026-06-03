@@ -12,12 +12,7 @@ type PageData struct {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-
-	if r.URL.Path != "/" {
-		renderError(w, http.StatusNotFound, "Page Not Found")
-		return
-	}
-	if r.Method != "GET" {
+	if r.Method != http.MethodGet {
 		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
 	}
@@ -35,7 +30,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
+	if r.Method != http.MethodPost {
 		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
 
