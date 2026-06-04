@@ -11,17 +11,15 @@ type PageData struct {
 	Result string
 }
 
+var temp =template.Must(template.ParseFiles("templates/index.html"))
+	
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
 	}
-	templ, err := template.ParseFiles("templates/index.html")
-	if err != nil {
-		renderError(w, http.StatusInternalServerError, "Internal Server Error")
-		return
-	}
-	err = templ.Execute(w, nil)
+	
+	err := temp.Execute(w, nil)
 	if err != nil {
 		renderError(w, http.StatusInternalServerError, "Internal Server Error")
 		return
@@ -56,13 +54,8 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		Banner: banner,
 		Result: result,
 	}
-	templ, err := template.ParseFiles("templates/index.html")
-	if err != nil {
-		renderError(w, http.StatusInternalServerError, "Internal Server Error")
-		return
-	}
-
-	err = templ.Execute(w, content)
+	
+	err = temp.Execute(w, content)
 	if err != nil {
 		renderError(w, http.StatusInternalServerError, "Internal Server Error")
 		return

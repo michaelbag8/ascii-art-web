@@ -10,20 +10,16 @@ type ErrorData struct {
 	Message string
 }
 
+var templ =template.Must(template.ParseFiles("templates/errors.html"))
+	
 func renderError(w http.ResponseWriter, code int, message string) {
-	templ, err := template.ParseFiles("templates/errors.html")
-	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
 	w.WriteHeader(code)
 
 	data := ErrorData{
 		Code:    code,
 		Message: message,
 	}
-
-	err = templ.Execute(w, data)
+	err := templ.Execute(w, data)
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
