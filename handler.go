@@ -14,6 +14,10 @@ type PageData struct {
 var temp = template.Must(template.ParseFiles("templates/index.html"))
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/"{
+		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
+		return
+	}
 	if r.Method != http.MethodGet {
 		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
@@ -33,7 +37,8 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	banner, input := r.FormValue("banner"), r.FormValue("input")
+	banner := r.FormValue("banner")
+	input := r.FormValue("input")
 
 	if input == "" {
 		renderError(w, http.StatusBadRequest, "Bad Request")
