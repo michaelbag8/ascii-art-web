@@ -10,8 +10,8 @@ type ErrorData struct {
 	Message string
 }
 
-var templ =template.Must(template.ParseFiles("templates/errors.html"))
-	
+var templ = template.Must(template.ParseFiles("templates/errors.html"))
+
 func renderError(w http.ResponseWriter, code int, message string) {
 	w.WriteHeader(code)
 
