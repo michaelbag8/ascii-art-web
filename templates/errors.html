@@ -5,13 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error Page</title>
+    <link rel="stylesheet" href="static/index.css">
 </head>
 
 <body>
-    <p>{{.Code}}</p>
-    <p>{{.Message}}</p>
-    <a href="/">Go back home</a>
-
+    <div class="error-container">
+        <p class="error-code">{{.Code}}</p>
+        <p class="error-message">{{.Message}}</p>
+        <a href="/">Go back home</a>
+    </div>
 </body>
 
 </html>
