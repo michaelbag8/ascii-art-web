@@ -11,14 +11,14 @@ type PageData struct {
 	Result string
 }
 
-var temp =template.Must(template.ParseFiles("templates/index.html"))
-	
+var temp = template.Must(template.ParseFiles("templates/index.html"))
+
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
 	}
-	
+
 	err := temp.Execute(w, nil)
 	if err != nil {
 		renderError(w, http.StatusInternalServerError, "Internal Server Error")
@@ -35,10 +35,25 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	banner, input := r.FormValue("banner"), r.FormValue("input")
 
-	err := ValidateInput(input, banner)
-	if err != nil {
+	if input == "" {
 		renderError(w, http.StatusBadRequest, "Bad Request")
 		return
+	}
+	if banner != "standard" && banner != "shadow" && banner != "thinkertoy" {
+		renderError(w, http.StatusInternalServerError, "empty banner")
+		return
+	}
+	for _, ch := range input {
+		if ch == '\n' {
+			continue
+		}
+		for _, ch := range input {
+			if ch < 32 || ch > 126 {
+				renderError(w, http.StatusInternalServerError, "Non ascii character")
+				return
+			}
+		}
+
 	}
 
 	bannerMap, err := LoadBanner("banner/" + banner + ".txt")
@@ -54,7 +69,7 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		Banner: banner,
 		Result: result,
 	}
-	
+
 	err = temp.Execute(w, content)
 	if err != nil {
 		renderError(w, http.StatusInternalServerError, "Internal Server Error")
@@ -62,5 +77,3 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
-
-
