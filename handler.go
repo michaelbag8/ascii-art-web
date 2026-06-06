@@ -1,8 +1,10 @@
 package main
 
 import (
+	
 	"html/template"
 	"net/http"
+	"strings"
 )
 
 type PageData struct {
@@ -28,7 +30,20 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	banner := r.FormValue("banner")
 	input := r.FormValue("input")
 
-	err :=ValidateInput(input, banner)
+	//'h''e''\r''\n''m''e'
+	//input = strings.ReplaceAll(input, "\r\n", "\n")
+	var cleanedInput strings.Builder 
+	for _, c := range input{
+		if c == '\r' || c == '\n'{
+			continue
+		}
+		
+		cleanedInput.WriteRune(c)
+		//fmt.Printf("%q", c)
+
+	}
+//fmt.Println(cleanedInput.String())
+	err :=ValidateInput(cleanedInput.String(), banner)
 	if err!=nil {
 		renderError(w, http.StatusBadRequest, "Bad Request")
 		return
@@ -40,10 +55,10 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := Generate(input, bannerMap)
+	result := Generate(cleanedInput.String(), bannerMap)
 
 	content := PageData{
-		Input:  input,
+		Input:  cleanedInput.String(),
 		Banner: banner,
 		Result: result,
 	}
