@@ -2,9 +2,12 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func ValidateInput(input string, banner string) error {
+	input = strings.ReplaceAll(input, "\r", "") //this
+
 	if input == "" {
 		return fmt.Errorf("input is empty")
 	}
@@ -12,7 +15,7 @@ func ValidateInput(input string, banner string) error {
 		return fmt.Errorf("not a banner method")
 	}
 	for _, ch := range input {
-		if ch == '\n' {
+		if ch == '\n' || ch == '\r'{ //ch == '\r' this
 			continue
 		}
 		if ch < 32 || ch > 126 {
