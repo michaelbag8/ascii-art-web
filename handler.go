@@ -1,7 +1,6 @@
 package main
 
 import (
-	
 	"html/template"
 	"net/http"
 	"strings"
@@ -26,26 +25,15 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
-	
+
 	banner := r.FormValue("banner")
 	input := r.FormValue("input")
 
-	//'h''e''\r''\n''m''e'
-	//input = strings.ReplaceAll(input, "\r\n", "\n")
-	var cleanedInput strings.Builder 
-	for _, c := range input{
-		if c == '\r' || c == '\n'{
-			continue
-		}
-		
-		cleanedInput.WriteRune(c)
-		//fmt.Printf("%q", c)
+	input = strings.ReplaceAll(input, "\r", "")//this
 
-	}
-//fmt.Println(cleanedInput.String())
-	err :=ValidateInput(cleanedInput.String(), banner)
-	if err!=nil {
-		renderError(w, http.StatusBadRequest, "Bad Request")
+	err := ValidateInput(input, banner)
+	if err != nil {
+		renderError(w, http.StatusBadRequest, "Bad Bad Request")
 		return
 	}
 
@@ -55,10 +43,10 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := Generate(cleanedInput.String(), bannerMap)
+	result := Generate(input, bannerMap)
 
 	content := PageData{
-		Input:  cleanedInput.String(),
+		Input:  input,
 		Banner: banner,
 		Result: result,
 	}
