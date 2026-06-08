@@ -5,7 +5,7 @@ import "strings"
 func Generate(input string, banner map[rune][]string) string {
 	var output strings.Builder
 
-	segments := SplitInput(input)
+	segments := strings.Split(input, "\n")
 
 	for i, segment := range segments {
 		if segment == "" {
@@ -20,6 +20,7 @@ func Generate(input string, banner map[rune][]string) string {
 			output.WriteString(row)
 			output.WriteString("\n")
 		}
+
 	}
 	return output.String()
 }
