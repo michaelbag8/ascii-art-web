@@ -13,7 +13,6 @@ func main() {
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-
 	fmt.Println("server is runing.....http://localhost:8080")
 
 	err := http.ListenAndServe(":8080", nil)
