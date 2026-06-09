@@ -1,5 +1,5 @@
 # ASCII Art Web
-The project is online at [Link Text](https://ascii-art-web-production-8d82.up.railway.app/)
+The project is online at [ascii-art-web](https://ascii-art-web-production-8d82.up.railway.app/)
 
 A web-based ASCII art generator built with Go. Type any text, choose a banner style, and instantly see your text rendered as ASCII art in the browser.
 
