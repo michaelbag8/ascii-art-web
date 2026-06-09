@@ -33,7 +33,7 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := ValidateInput(input, banner)
 	if err != nil {
-		renderError(w, http.StatusBadRequest, "Bad Bad Request")
+		renderError(w, http.StatusBadRequest, "Bad Request")
 		return
 	}
 
