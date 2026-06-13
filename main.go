@@ -13,9 +13,9 @@ func main() {
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-	fmt.Println("server is runing.....http://localhost:8080")
+	fmt.Println("server is runing.....http://localhost:9090")
 
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":9090", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
