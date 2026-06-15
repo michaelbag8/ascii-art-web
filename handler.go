@@ -25,6 +25,10 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/ascii-art"{
+		renderError(w, http.StatusBadRequest, "Bad Request")
+		return
+	}
 
 	banner := r.FormValue("banner")
 	input := r.FormValue("input")
