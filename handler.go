@@ -15,6 +15,10 @@ type PageData struct {
 var temp = template.Must(template.ParseFiles("templates/index.html"))
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/"{
+		renderError(w, http.StatusBadRequest, "Bad Request")
+		return
+	}
 
 	err := temp.Execute(w, nil)
 	if err != nil {
