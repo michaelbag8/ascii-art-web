@@ -15,7 +15,7 @@ func main() {
 
 	fmt.Println("server is runing.....http://localhost:9090")
 
-	err := http.ListenAndServe(":9090", nil)
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
