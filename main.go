@@ -8,8 +8,8 @@ import (
 
 func main() {
 
-	http.HandleFunc("GET /{$}", homeHandler)
-	http.HandleFunc("POST /ascii-art", asciiArtHandler)
+http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/ascii-art", asciiArtHandler)
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 

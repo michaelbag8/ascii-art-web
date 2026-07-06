@@ -1,0 +1,11 @@
+# Ignore local build and editor files
+Dockerfile
+.dockerignore
+.git
+.gitignore
+*.log
+*~
+*.tmp
+*.swp
+*.bak
+__pycache__

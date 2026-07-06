@@ -15,8 +15,13 @@ type PageData struct {
 var temp = template.Must(template.ParseFiles("templates/index.html"))
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/"{
+	if r.URL.Path != "/" {
 		renderError(w, http.StatusBadRequest, "Bad Request")
+		return
+	}
+
+	if r.Method != http.MethodGet {
+		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
 	}
 
@@ -25,12 +30,16 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		renderError(w, http.StatusInternalServerError, "Internal Server Error")
 		return
 	}
-
 }
 
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/ascii-art"{
+	if r.URL.Path != "/ascii-art" {
 		renderError(w, http.StatusBadRequest, "Bad Request")
+		return
+	}
+
+	if r.Method != http.MethodPost {
+		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
 	}
 

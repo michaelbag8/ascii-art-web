@@ -112,8 +112,25 @@ ascii-art-web/
 ├── templates/
 │   ├── index.html
 │   └── error.html
-└── static/
-    └── style.css
+├── static/
+│   └── style.css
+├── Dockerfile
+└── .dockerignore
+```
+
+## Docker
+
+Build the image and run the container with:
+
+```bash
+docker build -t ascii-art-web:latest .
+docker run --rm -p 8080:8080 ascii-art-web:latest
+```
+
+Then open your browser at:
+
+```
+http://localhost:8080
 ```
 
 ---
